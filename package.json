@@ -1,14 +1,14 @@
 {
-  "name": "example",
+  "name": "terminal",
   "version": "1.0.0",
-  "description": "provide-your-own-desc",
+  "description": "todo",
   "main": "index-dev.html",
   "scripts": {
     "test": "sbt test"
   },
   "repository": {
     "type": "git",
-    "url": "supply-ur-own"
+    "url": "todo"
   },
   "author": "Patryk Wertka and Snow White's seven dwarfs",
   "license": "ISC",
