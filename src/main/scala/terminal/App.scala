@@ -1,11 +1,6 @@
 package terminal
 
 import scala.scalajs.js.JSApp
-import org.scalajs.dom
-import org.scalajs.dom.raw.{Element, HTMLElement}
-
-import scala.collection.mutable
-
 
 
 object App extends JSApp {
@@ -20,6 +15,10 @@ object App extends JSApp {
   def run(): Unit = {
     val terminal = new Terminal()
     terminal.start()
+
+    val audio = new jsbindings.Audio()
+    audio.src = "assets/audios/10 Minutes of Ambient Computer Sounds - Retro_SciFi Medley.mp3"
+    audio.play()
 
 
     terminal.println("Liberty Prime is online.")
