@@ -14,7 +14,7 @@ class Terminal(implicit target: RenderTarget) {
 
   case class LinesQueue() extends mutable.Queue[LineCharactersQueue]
 
-  private var buffer = LinesQueue()
+  private val buffer = LinesQueue()
 
   type Line = HTMLElement
 
