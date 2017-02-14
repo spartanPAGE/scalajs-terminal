@@ -1077,6 +1077,48 @@ var $d_O = new $TypeData().initClass({
 }, (void 0), (void 0), $is_O, $isArrayOf_O);
 $c_O.prototype.$classData = $d_O;
 /** @constructor */
+function $c_Ljsbindings_Audio$() {
+  $c_O.call(this)
+}
+$c_Ljsbindings_Audio$.prototype = new $h_O();
+$c_Ljsbindings_Audio$.prototype.constructor = $c_Ljsbindings_Audio$;
+/** @constructor */
+function $h_Ljsbindings_Audio$() {
+  /*<skip>*/
+}
+$h_Ljsbindings_Audio$.prototype = $c_Ljsbindings_Audio$.prototype;
+$c_Ljsbindings_Audio$.prototype.init___ = (function() {
+  return this
+});
+$c_Ljsbindings_Audio$.prototype.sound__T__Ljsbindings_Audio = (function(source) {
+  var audio = new $g.Audio();
+  audio.src = source;
+  audio.loop = false;
+  audio.autoplay = true;
+  return audio
+});
+$c_Ljsbindings_Audio$.prototype.ambient__T__Ljsbindings_Audio = (function(source) {
+  var audio = new $g.Audio();
+  audio.src = source;
+  audio.loop = true;
+  audio.autoplay = true;
+  return audio
+});
+var $d_Ljsbindings_Audio$ = new $TypeData().initClass({
+  Ljsbindings_Audio$: 0
+}, false, "jsbindings.Audio$", {
+  Ljsbindings_Audio$: 1,
+  O: 1
+});
+$c_Ljsbindings_Audio$.prototype.$classData = $d_Ljsbindings_Audio$;
+var $n_Ljsbindings_Audio$ = (void 0);
+function $m_Ljsbindings_Audio$() {
+  if ((!$n_Ljsbindings_Audio$)) {
+    $n_Ljsbindings_Audio$ = new $c_Ljsbindings_Audio$().init___()
+  };
+  return $n_Ljsbindings_Audio$
+}
+/** @constructor */
 function $c_Lorg_scalajs_dom_package$() {
   $c_O.call(this);
   this.ApplicationCache$1 = null;
@@ -1174,6 +1216,11 @@ $h_Lterminal_Terminal.prototype = $c_Lterminal_Terminal.prototype;
 $c_Lterminal_Terminal.prototype.defaultLineContainer__Lorg_scalajs_dom_raw_Element = (function() {
   return $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().createElement("h1")
 });
+$c_Lterminal_Terminal.prototype.consumeCharacter__C__V = (function(character) {
+  var ev$1 = this.currentLine__Lorg_scalajs_dom_raw_HTMLElement();
+  ev$1.innerHTML = (("" + $as_T(ev$1.innerHTML)) + new $c_jl_Character().init___C(character));
+  $m_Ljsbindings_Audio$().sound__T__Ljsbindings_Audio("assets/audios/keystroke.ogg")
+});
 $c_Lterminal_Terminal.prototype.lookForCharInQueue__s_Option = (function() {
   var this$1 = this.buffer$1;
   var line = $as_Lterminal_Terminal$LineCharactersQueue(this$1.head__O());
@@ -1200,8 +1247,7 @@ $c_Lterminal_Terminal.prototype.intervalAction__V = (function() {
         break
       }
       default: {
-        var ev$1 = this.currentLine__Lorg_scalajs_dom_raw_HTMLElement();
-        ev$1.innerHTML = (("" + $as_T(ev$1.innerHTML)) + new $c_jl_Character().init___C($char))
+        this.consumeCharacter__C__V($char)
       }
     }
   }
@@ -1778,9 +1824,7 @@ $c_Lterminal_App$.prototype.init___ = (function() {
 $c_Lterminal_App$.prototype.run__V = (function() {
   var terminal = new $c_Lterminal_Terminal().init___Lterminal_RenderTarget(this.target$1);
   terminal.start__Lterminal_TerminalConfig__Lterminal_Handle(this.terminalConfig$1);
-  var audio = new $g.Audio();
-  audio.src = "assets/audios/10 Minutes of Ambient Computer Sounds - Retro_SciFi Medley.mp3";
-  audio.play();
+  $m_Ljsbindings_Audio$().ambient__T__Ljsbindings_Audio("assets/audios/10 Minutes of Ambient Computer Sounds - Retro_SciFi Medley.mp3");
   terminal.println__T__V("Liberty Prime is online.");
   terminal.println__T__V("All systems nominal.");
   terminal.println__T__V("Weapons hot.");
