@@ -17,3 +17,21 @@ class Audio() extends js.Object {
   def play(): Unit = js.native
   def pause(): Unit = js.native
 }
+
+object Audio {
+  def ambient(source: String): Audio = {
+    val audio = new Audio()
+    audio.src = source
+    audio.loop = true
+    audio.autoplay = true
+    audio
+  }
+
+  def sound(source: String): Audio = {
+    val audio = new Audio()
+    audio.src = source
+    audio.loop = false
+    audio.autoplay = true
+    audio
+  }
+}
