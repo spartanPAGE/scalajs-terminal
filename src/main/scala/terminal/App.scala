@@ -10,7 +10,7 @@ import scala.collection.mutable
 
 object App extends JSApp {
   implicit val target = RenderTarget(id = "scala-render-target")
-  implicit val terminalConfig = TerminalConfig(interval = 100)
+  implicit val terminalConfig = TerminalConfig(interval = 80)
 
   def main(): Unit = {
     run()
@@ -22,9 +22,11 @@ object App extends JSApp {
     terminal.start()
 
 
-    terminal.println("Hello world!")
-    terminal.println("------------")
-    terminal.println("------------")
+    terminal.println("Liberty Prime is online.")
+    terminal.println("All systems nominal.")
+    terminal.println("Weapons hot.")
+    terminal.println(" Mission: the destruction of any and ")
+    terminal.println("all Chinese communists.")
   }
 
   def render(): Unit = {
