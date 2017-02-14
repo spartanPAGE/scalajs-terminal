@@ -16,9 +16,7 @@ object App extends JSApp {
     val terminal = new Terminal()
     terminal.start()
 
-    val audio = new jsbindings.Audio()
-    audio.src = "assets/audios/10 Minutes of Ambient Computer Sounds - Retro_SciFi Medley.mp3"
-    audio.play()
+    jsbindings.Audio.ambient("assets/audios/10 Minutes of Ambient Computer Sounds - Retro_SciFi Medley.mp3")
 
 
     terminal.println("Liberty Prime is online.")
