@@ -8,6 +8,10 @@ import scala.collection.mutable
 
 case class TerminalConfig(interval: Double)
 
+object Terminal {
+  def keystrokePath(): String = "assets/audios/keystroke.ogg"
+}
+
 class Terminal(implicit target: RenderTarget) {
 
   case class LineCharactersQueue() extends mutable.Queue[Char]
@@ -47,11 +51,16 @@ class Terminal(implicit target: RenderTarget) {
     if (buffer.isEmpty) None else lookForCharInQueue()
   }
 
+  def consumeCharacter(character: Char): Unit = {
+    currentLine().innerHTML += character
+    jsbindings.Audio.sound(Terminal.keystrokePath())
+  }
+
   def intervalAction(): Unit = {
     nextCharacter() match {
       case Some(char) => char match {
         case '\n' => currentLineIndex += 1
-        case c => currentLine().innerHTML += c
+        case c => consumeCharacter(c)
       }
       case _ =>
     }
