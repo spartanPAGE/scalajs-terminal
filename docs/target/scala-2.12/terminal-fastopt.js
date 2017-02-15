@@ -1200,11 +1200,8 @@ function $m_Lorg_scalajs_dom_package$() {
 /** @constructor */
 function $c_Lterminal_Terminal() {
   $c_O.call(this);
-  this.LineCharactersQueue$module$1 = null;
-  this.LinesQueue$module$1 = null;
-  this.target$1 = null;
-  this.buffer$1 = null;
-  this.currentLineIndex$1 = 0
+  this.config$1 = null;
+  this.buffer$1 = null
 }
 $c_Lterminal_Terminal.prototype = new $h_O();
 $c_Lterminal_Terminal.prototype.constructor = $c_Lterminal_Terminal;
@@ -1213,22 +1210,20 @@ function $h_Lterminal_Terminal() {
   /*<skip>*/
 }
 $h_Lterminal_Terminal.prototype = $c_Lterminal_Terminal.prototype;
-$c_Lterminal_Terminal.prototype.defaultLineContainer__Lorg_scalajs_dom_raw_Element = (function() {
-  return $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().createElement("h1")
-});
 $c_Lterminal_Terminal.prototype.consumeCharacter__C__V = (function(character) {
-  var ev$1 = this.currentLine__Lorg_scalajs_dom_raw_HTMLElement();
-  ev$1.innerHTML = (("" + $as_T(ev$1.innerHTML)) + new $c_jl_Character().init___C(character));
-  $m_Ljsbindings_Audio$().sound__T__Ljsbindings_Audio("assets/audios/keystroke.ogg")
-});
-$c_Lterminal_Terminal.prototype.lookForCharInQueue__s_Option = (function() {
-  var this$1 = this.buffer$1;
-  var line = $as_Lterminal_Terminal$LineCharactersQueue(this$1.head__O());
-  if (line.isEmpty__Z()) {
-    this.buffer$1.dequeue__O();
-    return this.nextCharacter__s_Option()
+  var ev$1 = this.config$1.target$1.element__Lorg_scalajs_dom_raw_HTMLElement();
+  var jsx$2 = $as_T(ev$1.innerHTML);
+  switch (character) {
+    case 10: {
+      var jsx$1 = "<br>";
+      break
+    }
+    default: {
+      var jsx$1 = new $c_jl_Character().init___C(character)
+    }
   };
-  return new $c_s_Some().init___O(line.dequeue__O())
+  ev$1.innerHTML = (("" + jsx$2) + jsx$1);
+  $m_Ljsbindings_Audio$().sound__T__Ljsbindings_Audio($m_Lterminal_Terminal$().keystrokePath$1)
 });
 $c_Lterminal_Terminal.prototype.intervalAction__V = (function() {
   var x1 = this.nextCharacter__s_Option();
@@ -1241,25 +1236,16 @@ $c_Lterminal_Terminal.prototype.intervalAction__V = (function() {
       var this$2 = $as_jl_Character(c);
       var $char = this$2.value$1
     };
-    switch ($char) {
-      case 10: {
-        this.currentLineIndex$1 = ((1 + this.currentLineIndex$1) | 0);
-        break
-      }
-      default: {
-        this.consumeCharacter__C__V($char)
-      }
-    }
+    this.consumeCharacter__C__V($char)
   }
 });
-$c_Lterminal_Terminal.prototype.init___Lterminal_RenderTarget = (function(target) {
-  this.target$1 = target;
-  this.buffer$1 = new $c_Lterminal_Terminal$LinesQueue().init___Lterminal_Terminal(this);
-  this.currentLineIndex$1 = 0;
-  return this
-});
 $c_Lterminal_Terminal.prototype.nextCharacter__s_Option = (function() {
-  return (this.buffer$1.isEmpty__Z() ? $m_s_None$() : this.lookForCharInQueue__s_Option())
+  return (this.buffer$1.isEmpty__Z() ? $m_s_None$() : new $c_s_Some().init___O(this.buffer$1.dequeue__O()))
+});
+$c_Lterminal_Terminal.prototype.init___Lterminal_TerminalConfig = (function(config) {
+  this.config$1 = config;
+  this.buffer$1 = new $c_scm_Queue().init___();
+  return this
 });
 $c_Lterminal_Terminal.prototype.start__Lterminal_TerminalConfig__Lterminal_Handle = (function(config) {
   return new $c_Lterminal_Handle().init___I($uI($m_Lorg_scalajs_dom_package$().window__Lorg_scalajs_dom_raw_Window().setInterval((function(arg$outer) {
@@ -1268,11 +1254,7 @@ $c_Lterminal_Terminal.prototype.start__Lterminal_TerminalConfig__Lterminal_Handl
     })
   })(this), config.interval$1)))
 });
-$c_Lterminal_Terminal.prototype.currentLine__Lorg_scalajs_dom_raw_HTMLElement = (function() {
-  return this.target$1.element__Lorg_scalajs_dom_raw_HTMLElement().childNodes.item(this.currentLineIndex$1)
-});
 $c_Lterminal_Terminal.prototype.println__T__V = (function(text) {
-  this.pushNewLine__V();
   var x = (("" + text) + new $c_jl_Character().init___C(10));
   var this$4 = new $c_sci_StringOps().init___T(x);
   var i = 0;
@@ -1286,32 +1268,18 @@ $c_Lterminal_Terminal.prototype.println__T__V = (function(text) {
       var this$8 = $as_jl_Character(arg1);
       var $char = this$8.value$1
     };
-    var this$9 = this.buffer$1;
-    var this$12 = $as_scm_Queue(this$9.head__O());
+    var this$11 = this.buffer$1;
     var array = [new $c_jl_Character().init___C($char)];
     var i$1 = 0;
     var len$1 = $uI(array.length);
     while ((i$1 < len$1)) {
       var index = i$1;
       var arg1$1 = array[index];
-      this$12.$$plus$eq__O__scm_MutableList(arg1$1);
+      this$11.$$plus$eq__O__scm_MutableList(arg1$1);
       i$1 = ((1 + i$1) | 0)
     };
     i = ((1 + i) | 0)
   }
-});
-$c_Lterminal_Terminal.prototype.pushNewLine__V = (function() {
-  var this$1 = this.buffer$1;
-  var array = [new $c_Lterminal_Terminal$LineCharactersQueue().init___Lterminal_Terminal(this)];
-  var i = 0;
-  var len = $uI(array.length);
-  while ((i < len)) {
-    var index = i;
-    var arg1 = array[index];
-    this$1.$$plus$eq__O__scm_MutableList(arg1);
-    i = ((1 + i) | 0)
-  };
-  this.target$1.element__Lorg_scalajs_dom_raw_HTMLElement().appendChild(this.defaultLineContainer__Lorg_scalajs_dom_raw_Element())
 });
 var $d_Lterminal_Terminal = new $TypeData().initClass({
   Lterminal_Terminal: 0
@@ -1320,6 +1288,44 @@ var $d_Lterminal_Terminal = new $TypeData().initClass({
   O: 1
 });
 $c_Lterminal_Terminal.prototype.$classData = $d_Lterminal_Terminal;
+/** @constructor */
+function $c_Lterminal_Terminal$() {
+  $c_O.call(this);
+  this.keystrokePath$1 = null;
+  this.terminalRenderTargetId$1 = null
+}
+$c_Lterminal_Terminal$.prototype = new $h_O();
+$c_Lterminal_Terminal$.prototype.constructor = $c_Lterminal_Terminal$;
+/** @constructor */
+function $h_Lterminal_Terminal$() {
+  /*<skip>*/
+}
+$h_Lterminal_Terminal$.prototype = $c_Lterminal_Terminal$.prototype;
+$c_Lterminal_Terminal$.prototype.init___ = (function() {
+  this.keystrokePath$1 = "assets/audios/keystroke.ogg";
+  this.terminalRenderTargetId$1 = "terminal-render-target";
+  return this
+});
+$c_Lterminal_Terminal$.prototype.createTarget__Lterminal_RenderTarget__T__Lterminal_RenderTarget = (function(parent, tag) {
+  var target = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().createElement(tag);
+  target.id = this.terminalRenderTargetId$1;
+  parent.element__Lorg_scalajs_dom_raw_HTMLElement().appendChild(target);
+  return new $c_Lterminal_RenderTarget().init___T(this.terminalRenderTargetId$1)
+});
+var $d_Lterminal_Terminal$ = new $TypeData().initClass({
+  Lterminal_Terminal$: 0
+}, false, "terminal.Terminal$", {
+  Lterminal_Terminal$: 1,
+  O: 1
+});
+$c_Lterminal_Terminal$.prototype.$classData = $d_Lterminal_Terminal$;
+var $n_Lterminal_Terminal$ = (void 0);
+function $m_Lterminal_Terminal$() {
+  if ((!$n_Lterminal_Terminal$)) {
+    $n_Lterminal_Terminal$ = new $c_Lterminal_Terminal$().init___()
+  };
+  return $n_Lterminal_Terminal$
+}
 /** @constructor */
 function $c_jl_Class() {
   $c_O.call(this);
@@ -1805,7 +1811,7 @@ function $m_sr_Statics$() {
 /** @constructor */
 function $c_Lterminal_App$() {
   $c_O.call(this);
-  this.target$1 = null;
+  this.root$1 = null;
   this.terminalConfig$1 = null
 }
 $c_Lterminal_App$.prototype = new $h_O();
@@ -1817,12 +1823,12 @@ function $h_Lterminal_App$() {
 $h_Lterminal_App$.prototype = $c_Lterminal_App$.prototype;
 $c_Lterminal_App$.prototype.init___ = (function() {
   $n_Lterminal_App$ = this;
-  this.target$1 = new $c_Lterminal_RenderTarget().init___T("scala-render-target");
-  this.terminalConfig$1 = new $c_Lterminal_TerminalConfig().init___D(80.0);
+  this.root$1 = new $c_Lterminal_RenderTarget().init___T("scala-render-target");
+  this.terminalConfig$1 = new $c_Lterminal_TerminalConfig().init___Lterminal_RenderTarget__D($m_Lterminal_Terminal$().createTarget__Lterminal_RenderTarget__T__Lterminal_RenderTarget(this.root$1, "h1"), 80.0);
   return this
 });
 $c_Lterminal_App$.prototype.run__V = (function() {
-  var terminal = new $c_Lterminal_Terminal().init___Lterminal_RenderTarget(this.target$1);
+  var terminal = new $c_Lterminal_Terminal().init___Lterminal_TerminalConfig(this.terminalConfig$1);
   terminal.start__Lterminal_TerminalConfig__Lterminal_Handle(this.terminalConfig$1);
   $m_Ljsbindings_Audio$().ambient__T__Ljsbindings_Audio("assets/audios/10 Minutes of Ambient Computer Sounds - Retro_SciFi Medley.mp3");
   terminal.println__T__V("Liberty Prime is online.");
@@ -1836,7 +1842,7 @@ $c_Lterminal_App$.prototype.main__V = (function() {
   this.render__V()
 });
 $c_Lterminal_App$.prototype.render__V = (function() {
-  var ev$1 = this.target$1.element__Lorg_scalajs_dom_raw_HTMLElement();
+  var ev$1 = this.root$1.element__Lorg_scalajs_dom_raw_HTMLElement();
   ev$1.className = ($as_T(ev$1.className) + " glow")
 });
 $c_Lterminal_App$.prototype.$$js$exported$meth$main__O = (function() {
@@ -3033,6 +3039,7 @@ $c_Lterminal_RenderTarget.prototype.$classData = $d_Lterminal_RenderTarget;
 /** @constructor */
 function $c_Lterminal_TerminalConfig() {
   $c_O.call(this);
+  this.target$1 = null;
   this.interval$1 = 0.0
 }
 $c_Lterminal_TerminalConfig.prototype = new $h_O();
@@ -3046,15 +3053,15 @@ $c_Lterminal_TerminalConfig.prototype.productPrefix__T = (function() {
   return "TerminalConfig"
 });
 $c_Lterminal_TerminalConfig.prototype.productArity__I = (function() {
-  return 1
-});
-$c_Lterminal_TerminalConfig.prototype.init___D = (function(interval) {
-  this.interval$1 = interval;
-  return this
+  return 2
 });
 $c_Lterminal_TerminalConfig.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
+      return this.target$1;
+      break
+    }
+    case 1: {
       return this.interval$1;
       break
     }
@@ -3068,11 +3075,17 @@ $c_Lterminal_TerminalConfig.prototype.toString__T = (function() {
 });
 $c_Lterminal_TerminalConfig.prototype.hashCode__I = (function() {
   var acc = (-889275714);
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.target$1));
   acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().doubleHash__D__I(this.interval$1));
-  return $m_sr_Statics$().finalizeHash__I__I__I(acc, 1)
+  return $m_sr_Statics$().finalizeHash__I__I__I(acc, 2)
 });
 $c_Lterminal_TerminalConfig.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lterminal_TerminalConfig.prototype.init___Lterminal_RenderTarget__D = (function(target, interval) {
+  this.target$1 = target;
+  this.interval$1 = interval;
+  return this
 });
 var $d_Lterminal_TerminalConfig = new $TypeData().initClass({
   Lterminal_TerminalConfig: 0
@@ -4085,32 +4098,20 @@ $c_scm_Queue.prototype.dequeue__O = (function() {
     return res
   }
 });
+$c_scm_Queue.prototype.tail__O = (function() {
+  return this.tail__scm_Queue()
+});
 $c_scm_Queue.prototype.decrementLength__p6__V = (function() {
   this.len$5 = (((-1) + this.len$5) | 0);
   if ((this.len$5 === 0)) {
     this.last0$5 = this.first0$5
   }
 });
-$c_scm_Queue.prototype.tail__O = (function() {
-  return this.tail__scm_Queue()
-});
 $c_scm_Queue.prototype.tail__scm_Queue = (function() {
   var tl = new $c_scm_Queue().init___();
   this.tailImpl__scm_MutableList__V(tl);
   return tl
 });
-function $is_scm_Queue(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.scm_Queue)))
-}
-function $as_scm_Queue(obj) {
-  return (($is_scm_Queue(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.mutable.Queue"))
-}
-function $isArrayOf_scm_Queue(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.scm_Queue)))
-}
-function $asArrayOf_scm_Queue(obj, depth) {
-  return (($isArrayOf_scm_Queue(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.mutable.Queue;", depth))
-}
 var $d_scm_Queue = new $TypeData().initClass({
   scm_Queue: 0
 }, false, "scala.collection.mutable.Queue", {
@@ -4161,188 +4162,6 @@ var $d_scm_Queue = new $TypeData().initClass({
   Ljava_io_Serializable: 1
 });
 $c_scm_Queue.prototype.$classData = $d_scm_Queue;
-/** @constructor */
-function $c_Lterminal_Terminal$LineCharactersQueue() {
-  $c_scm_Queue.call(this);
-  this.$$outer$7 = null
-}
-$c_Lterminal_Terminal$LineCharactersQueue.prototype = new $h_scm_Queue();
-$c_Lterminal_Terminal$LineCharactersQueue.prototype.constructor = $c_Lterminal_Terminal$LineCharactersQueue;
-/** @constructor */
-function $h_Lterminal_Terminal$LineCharactersQueue() {
-  /*<skip>*/
-}
-$h_Lterminal_Terminal$LineCharactersQueue.prototype = $c_Lterminal_Terminal$LineCharactersQueue.prototype;
-$c_Lterminal_Terminal$LineCharactersQueue.prototype.productPrefix__T = (function() {
-  return "LineCharactersQueue"
-});
-$c_Lterminal_Terminal$LineCharactersQueue.prototype.productArity__I = (function() {
-  return 0
-});
-$c_Lterminal_Terminal$LineCharactersQueue.prototype.productElement__I__O = (function(x$1) {
-  throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-});
-$c_Lterminal_Terminal$LineCharactersQueue.prototype.init___Lterminal_Terminal = (function($$outer) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$7 = $$outer
-  };
-  $c_scm_MutableList.prototype.init___.call(this);
-  return this
-});
-$c_Lterminal_Terminal$LineCharactersQueue.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-function $is_Lterminal_Terminal$LineCharactersQueue(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lterminal_Terminal$LineCharactersQueue)))
-}
-function $as_Lterminal_Terminal$LineCharactersQueue(obj) {
-  return (($is_Lterminal_Terminal$LineCharactersQueue(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "terminal.Terminal$LineCharactersQueue"))
-}
-function $isArrayOf_Lterminal_Terminal$LineCharactersQueue(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lterminal_Terminal$LineCharactersQueue)))
-}
-function $asArrayOf_Lterminal_Terminal$LineCharactersQueue(obj, depth) {
-  return (($isArrayOf_Lterminal_Terminal$LineCharactersQueue(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lterminal.Terminal$LineCharactersQueue;", depth))
-}
-var $d_Lterminal_Terminal$LineCharactersQueue = new $TypeData().initClass({
-  Lterminal_Terminal$LineCharactersQueue: 0
-}, false, "terminal.Terminal$LineCharactersQueue", {
-  Lterminal_Terminal$LineCharactersQueue: 1,
-  scm_Queue: 1,
-  scm_MutableList: 1,
-  scm_AbstractSeq: 1,
-  sc_AbstractSeq: 1,
-  sc_AbstractIterable: 1,
-  sc_AbstractTraversable: 1,
-  O: 1,
-  sc_Traversable: 1,
-  sc_TraversableLike: 1,
-  scg_HasNewBuilder: 1,
-  scg_FilterMonadic: 1,
-  sc_TraversableOnce: 1,
-  sc_GenTraversableOnce: 1,
-  sc_GenTraversableLike: 1,
-  sc_Parallelizable: 1,
-  sc_GenTraversable: 1,
-  scg_GenericTraversableTemplate: 1,
-  sc_Iterable: 1,
-  sc_GenIterable: 1,
-  sc_GenIterableLike: 1,
-  sc_IterableLike: 1,
-  s_Equals: 1,
-  sc_Seq: 1,
-  s_PartialFunction: 1,
-  F1: 1,
-  sc_GenSeq: 1,
-  sc_GenSeqLike: 1,
-  sc_SeqLike: 1,
-  scm_Seq: 1,
-  scm_Iterable: 1,
-  scm_Traversable: 1,
-  s_Mutable: 1,
-  scm_SeqLike: 1,
-  scm_Cloneable: 1,
-  s_Cloneable: 1,
-  jl_Cloneable: 1,
-  scm_LinearSeq: 1,
-  sc_LinearSeq: 1,
-  sc_LinearSeqLike: 1,
-  sc_LinearSeqOptimized: 1,
-  scm_Builder: 1,
-  scg_Growable: 1,
-  scg_Clearable: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1,
-  s_Product: 1
-});
-$c_Lterminal_Terminal$LineCharactersQueue.prototype.$classData = $d_Lterminal_Terminal$LineCharactersQueue;
-/** @constructor */
-function $c_Lterminal_Terminal$LinesQueue() {
-  $c_scm_Queue.call(this);
-  this.$$outer$7 = null
-}
-$c_Lterminal_Terminal$LinesQueue.prototype = new $h_scm_Queue();
-$c_Lterminal_Terminal$LinesQueue.prototype.constructor = $c_Lterminal_Terminal$LinesQueue;
-/** @constructor */
-function $h_Lterminal_Terminal$LinesQueue() {
-  /*<skip>*/
-}
-$h_Lterminal_Terminal$LinesQueue.prototype = $c_Lterminal_Terminal$LinesQueue.prototype;
-$c_Lterminal_Terminal$LinesQueue.prototype.productPrefix__T = (function() {
-  return "LinesQueue"
-});
-$c_Lterminal_Terminal$LinesQueue.prototype.productArity__I = (function() {
-  return 0
-});
-$c_Lterminal_Terminal$LinesQueue.prototype.productElement__I__O = (function(x$1) {
-  throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-});
-$c_Lterminal_Terminal$LinesQueue.prototype.init___Lterminal_Terminal = (function($$outer) {
-  if (($$outer === null)) {
-    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
-  } else {
-    this.$$outer$7 = $$outer
-  };
-  $c_scm_MutableList.prototype.init___.call(this);
-  return this
-});
-$c_Lterminal_Terminal$LinesQueue.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-var $d_Lterminal_Terminal$LinesQueue = new $TypeData().initClass({
-  Lterminal_Terminal$LinesQueue: 0
-}, false, "terminal.Terminal$LinesQueue", {
-  Lterminal_Terminal$LinesQueue: 1,
-  scm_Queue: 1,
-  scm_MutableList: 1,
-  scm_AbstractSeq: 1,
-  sc_AbstractSeq: 1,
-  sc_AbstractIterable: 1,
-  sc_AbstractTraversable: 1,
-  O: 1,
-  sc_Traversable: 1,
-  sc_TraversableLike: 1,
-  scg_HasNewBuilder: 1,
-  scg_FilterMonadic: 1,
-  sc_TraversableOnce: 1,
-  sc_GenTraversableOnce: 1,
-  sc_GenTraversableLike: 1,
-  sc_Parallelizable: 1,
-  sc_GenTraversable: 1,
-  scg_GenericTraversableTemplate: 1,
-  sc_Iterable: 1,
-  sc_GenIterable: 1,
-  sc_GenIterableLike: 1,
-  sc_IterableLike: 1,
-  s_Equals: 1,
-  sc_Seq: 1,
-  s_PartialFunction: 1,
-  F1: 1,
-  sc_GenSeq: 1,
-  sc_GenSeqLike: 1,
-  sc_SeqLike: 1,
-  scm_Seq: 1,
-  scm_Iterable: 1,
-  scm_Traversable: 1,
-  s_Mutable: 1,
-  scm_SeqLike: 1,
-  scm_Cloneable: 1,
-  s_Cloneable: 1,
-  jl_Cloneable: 1,
-  scm_LinearSeq: 1,
-  sc_LinearSeq: 1,
-  sc_LinearSeqLike: 1,
-  sc_LinearSeqOptimized: 1,
-  scm_Builder: 1,
-  scg_Growable: 1,
-  scg_Clearable: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1,
-  s_Product: 1
-});
-$c_Lterminal_Terminal$LinesQueue.prototype.$classData = $d_Lterminal_Terminal$LinesQueue;
 /** @constructor */
 function $c_scm_StringBuilder() {
   $c_scm_AbstractSeq.call(this);
