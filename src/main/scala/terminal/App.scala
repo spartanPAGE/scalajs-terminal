@@ -4,8 +4,8 @@ import scala.scalajs.js.JSApp
 
 
 object App extends JSApp {
-  implicit val target = RenderTarget(id = "scala-render-target")
-  implicit val terminalConfig = TerminalConfig(interval = 80)
+  implicit val root = RenderTarget(id = "scala-render-target")
+  implicit val terminalConfig = TerminalConfig(Terminal.createTarget(parent=root, tag="h1"), interval = 80)
 
   def main(): Unit = {
     run()
@@ -27,7 +27,7 @@ object App extends JSApp {
   }
 
   def render(): Unit = {
-    target.element().className += " glow"
+    root.element().className += " glow"
     //target.element.innerHTML = content.render
   }
 
