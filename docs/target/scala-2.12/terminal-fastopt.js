@@ -1198,10 +1198,43 @@ function $m_Lorg_scalajs_dom_package$() {
   return $n_Lorg_scalajs_dom_package$
 }
 /** @constructor */
+function $c_Lterminal_CountingIgnorer() {
+  $c_O.call(this);
+  this.count$1 = 0
+}
+$c_Lterminal_CountingIgnorer.prototype = new $h_O();
+$c_Lterminal_CountingIgnorer.prototype.constructor = $c_Lterminal_CountingIgnorer;
+/** @constructor */
+function $h_Lterminal_CountingIgnorer() {
+  /*<skip>*/
+}
+$h_Lterminal_CountingIgnorer.prototype = $c_Lterminal_CountingIgnorer.prototype;
+$c_Lterminal_CountingIgnorer.prototype.init___ = (function() {
+  this.count$1 = 0;
+  return this
+});
+$c_Lterminal_CountingIgnorer.prototype.increase__I__V = (function(by) {
+  this.count$1 = ((this.count$1 + by) | 0)
+});
+$c_Lterminal_CountingIgnorer.prototype.shouldIgnore__Z = (function() {
+  return (this.count$1 !== 0)
+});
+$c_Lterminal_CountingIgnorer.prototype.unignoreOne__V = (function() {
+  this.count$1 = (((-1) + this.count$1) | 0)
+});
+var $d_Lterminal_CountingIgnorer = new $TypeData().initClass({
+  Lterminal_CountingIgnorer: 0
+}, false, "terminal.CountingIgnorer", {
+  Lterminal_CountingIgnorer: 1,
+  O: 1
+});
+$c_Lterminal_CountingIgnorer.prototype.$classData = $d_Lterminal_CountingIgnorer;
+/** @constructor */
 function $c_Lterminal_Terminal() {
   $c_O.call(this);
   this.config$1 = null;
-  this.buffer$1 = null
+  this.buffer$1 = null;
+  this.intervalIgnorer$1 = null
 }
 $c_Lterminal_Terminal.prototype = new $h_O();
 $c_Lterminal_Terminal.prototype.constructor = $c_Lterminal_Terminal;
@@ -1223,9 +1256,27 @@ $c_Lterminal_Terminal.prototype.consumeCharacter__C__V = (function(character) {
     }
   };
   ev$1.innerHTML = (("" + jsx$2) + jsx$1);
-  $m_Ljsbindings_Audio$().sound__T__Ljsbindings_Audio($m_Lterminal_Terminal$().keystrokePath$1)
+  this.playKeystrokeSound__C__V(character);
+  this.intervalIgnorer$1.increase__I__V(this.ignoreIntervalsCountForGivenChar__C__I(character))
+});
+$c_Lterminal_Terminal.prototype.playKeystrokeSound__C__V = (function(character) {
+  var jsx$2 = $m_Ljsbindings_Audio$();
+  switch (character) {
+    case 10: {
+      var jsx$1 = $m_Lterminal_Terminal$().keystrokeEnterPath$1;
+      break
+    }
+    default: {
+      var jsx$1 = $m_Lterminal_Terminal$().keystrokePath$1
+    }
+  };
+  jsx$2.sound__T__Ljsbindings_Audio(jsx$1)
 });
 $c_Lterminal_Terminal.prototype.intervalAction__V = (function() {
+  if (this.intervalIgnorer$1.shouldIgnore__Z()) {
+    this.intervalIgnorer$1.unignoreOne__V();
+    return (void 0)
+  };
   var x1 = this.nextCharacter__s_Option();
   if ($is_s_Some(x1)) {
     var x2 = $as_s_Some(x1);
@@ -1242,9 +1293,21 @@ $c_Lterminal_Terminal.prototype.intervalAction__V = (function() {
 $c_Lterminal_Terminal.prototype.nextCharacter__s_Option = (function() {
   return (this.buffer$1.isEmpty__Z() ? $m_s_None$() : new $c_s_Some().init___O(this.buffer$1.dequeue__O()))
 });
+$c_Lterminal_Terminal.prototype.ignoreIntervalsCountForGivenChar__C__I = (function(character) {
+  switch (character) {
+    case 10: {
+      return 3;
+      break
+    }
+    default: {
+      return 0
+    }
+  }
+});
 $c_Lterminal_Terminal.prototype.init___Lterminal_TerminalConfig = (function(config) {
   this.config$1 = config;
   this.buffer$1 = new $c_scm_Queue().init___();
+  this.intervalIgnorer$1 = new $c_Lterminal_CountingIgnorer().init___();
   return this
 });
 $c_Lterminal_Terminal.prototype.start__Lterminal_TerminalConfig__Lterminal_Handle = (function(config) {
@@ -1292,6 +1355,7 @@ $c_Lterminal_Terminal.prototype.$classData = $d_Lterminal_Terminal;
 function $c_Lterminal_Terminal$() {
   $c_O.call(this);
   this.keystrokePath$1 = null;
+  this.keystrokeEnterPath$1 = null;
   this.terminalRenderTargetId$1 = null
 }
 $c_Lterminal_Terminal$.prototype = new $h_O();
@@ -1303,6 +1367,7 @@ function $h_Lterminal_Terminal$() {
 $h_Lterminal_Terminal$.prototype = $c_Lterminal_Terminal$.prototype;
 $c_Lterminal_Terminal$.prototype.init___ = (function() {
   this.keystrokePath$1 = "assets/audios/keystroke.ogg";
+  this.keystrokeEnterPath$1 = "assets/audios/keystroke-enter.ogg";
   this.terminalRenderTargetId$1 = "terminal-render-target";
   return this
 });
