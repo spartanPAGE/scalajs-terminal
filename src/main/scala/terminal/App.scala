@@ -1,11 +1,17 @@
 package terminal
 
 import scala.scalajs.js.JSApp
+import scala.scalajs.js.annotation.JSExport
 
 
 object App extends JSApp {
   implicit val root = RenderTarget(id = "scala-render-target")
   implicit val terminalConfig = TerminalConfig(Terminal.createTarget(parent=root, tag="h1"), interval = 80)
+
+  val terminal = new Terminal()
+
+  @JSExport
+  def println(text: String): Unit = terminal.println(text)
 
   def main(): Unit = {
     run()
@@ -13,17 +19,11 @@ object App extends JSApp {
   }
 
   def run(): Unit = {
-    val terminal = new Terminal()
-    terminal.start()
-
     jsbindings.Audio.ambient("assets/audios/10 Minutes of Ambient Computer Sounds - Retro_SciFi Medley.mp3")
 
-
-    terminal.println("Liberty Prime is online.")
-    terminal.println("All systems nominal.")
-    terminal.println("Weapons hot.")
-    terminal.println(" Mission: the destruction of any and ")
-    terminal.println("all Chinese communists.")
+    terminal.start()
+    terminal.println("Go on,")
+    terminal.println("""Use terminal.App().println("test")""");
   }
 
   def render(): Unit = {

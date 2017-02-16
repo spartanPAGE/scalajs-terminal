@@ -1290,9 +1290,6 @@ $c_Lterminal_Terminal.prototype.intervalAction__V = (function() {
     this.consumeCharacter__C__V($char)
   }
 });
-$c_Lterminal_Terminal.prototype.nextCharacter__s_Option = (function() {
-  return (this.buffer$1.isEmpty__Z() ? $m_s_None$() : new $c_s_Some().init___O(this.buffer$1.dequeue__O()))
-});
 $c_Lterminal_Terminal.prototype.ignoreIntervalsCountForGivenChar__C__I = (function(character) {
   switch (character) {
     case 10: {
@@ -1303,6 +1300,9 @@ $c_Lterminal_Terminal.prototype.ignoreIntervalsCountForGivenChar__C__I = (functi
       return 0
     }
   }
+});
+$c_Lterminal_Terminal.prototype.nextCharacter__s_Option = (function() {
+  return (this.buffer$1.isEmpty__Z() ? $m_s_None$() : new $c_s_Some().init___O(this.buffer$1.dequeue__O()))
 });
 $c_Lterminal_Terminal.prototype.init___Lterminal_TerminalConfig = (function(config) {
   this.config$1 = config;
@@ -1877,7 +1877,8 @@ function $m_sr_Statics$() {
 function $c_Lterminal_App$() {
   $c_O.call(this);
   this.root$1 = null;
-  this.terminalConfig$1 = null
+  this.terminalConfig$1 = null;
+  this.terminal$1 = null
 }
 $c_Lterminal_App$.prototype = new $h_O();
 $c_Lterminal_App$.prototype.constructor = $c_Lterminal_App$;
@@ -1890,21 +1891,21 @@ $c_Lterminal_App$.prototype.init___ = (function() {
   $n_Lterminal_App$ = this;
   this.root$1 = new $c_Lterminal_RenderTarget().init___T("scala-render-target");
   this.terminalConfig$1 = new $c_Lterminal_TerminalConfig().init___Lterminal_RenderTarget__D($m_Lterminal_Terminal$().createTarget__Lterminal_RenderTarget__T__Lterminal_RenderTarget(this.root$1, "h1"), 80.0);
+  this.terminal$1 = new $c_Lterminal_Terminal().init___Lterminal_TerminalConfig(this.terminalConfig$1);
   return this
 });
 $c_Lterminal_App$.prototype.run__V = (function() {
-  var terminal = new $c_Lterminal_Terminal().init___Lterminal_TerminalConfig(this.terminalConfig$1);
-  terminal.start__Lterminal_TerminalConfig__Lterminal_Handle(this.terminalConfig$1);
   $m_Ljsbindings_Audio$().ambient__T__Ljsbindings_Audio("assets/audios/10 Minutes of Ambient Computer Sounds - Retro_SciFi Medley.mp3");
-  terminal.println__T__V("Liberty Prime is online.");
-  terminal.println__T__V("All systems nominal.");
-  terminal.println__T__V("Weapons hot.");
-  terminal.println__T__V(" Mission: the destruction of any and ");
-  terminal.println__T__V("all Chinese communists.")
+  this.terminal$1.start__Lterminal_TerminalConfig__Lterminal_Handle(this.terminalConfig$1);
+  this.terminal$1.println__T__V("Go on,");
+  this.terminal$1.println__T__V("Use terminal.App().println(\"test\")")
 });
 $c_Lterminal_App$.prototype.main__V = (function() {
   this.run__V();
   this.render__V()
+});
+$c_Lterminal_App$.prototype.$$js$exported$meth$println__T__O = (function(text) {
+  this.terminal$1.println__T__V(text)
 });
 $c_Lterminal_App$.prototype.render__V = (function() {
   var ev$1 = this.root$1.element__Lorg_scalajs_dom_raw_HTMLElement();
@@ -1915,6 +1916,10 @@ $c_Lterminal_App$.prototype.$$js$exported$meth$main__O = (function() {
 });
 $c_Lterminal_App$.prototype.main = (function() {
   return this.$$js$exported$meth$main__O()
+});
+$c_Lterminal_App$.prototype.println = (function(arg$1) {
+  var prep0 = $as_T(arg$1);
+  return this.$$js$exported$meth$println__T__O(prep0)
 });
 var $d_Lterminal_App$ = new $TypeData().initClass({
   Lterminal_App$: 0
