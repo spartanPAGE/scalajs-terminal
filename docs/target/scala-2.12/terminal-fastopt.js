@@ -1909,7 +1909,7 @@ $c_Lterminal_App$.prototype.$$js$exported$meth$println__T__O = (function(text) {
 });
 $c_Lterminal_App$.prototype.render__V = (function() {
   var ev$1 = this.root$1.element__Lorg_scalajs_dom_raw_HTMLElement();
-  ev$1.className = ($as_T(ev$1.className) + " glow")
+  ev$1.className = ($as_T(ev$1.className) + " glow border")
 });
 $c_Lterminal_App$.prototype.$$js$exported$meth$main__O = (function() {
   this.main__V()
