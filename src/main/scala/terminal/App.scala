@@ -27,7 +27,7 @@ object App extends JSApp {
   }
 
   def render(): Unit = {
-    root.element().className += " glow"
+    root.element().className += " glow border"
     //target.element.innerHTML = content.render
   }
 
