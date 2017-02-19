@@ -1,7 +1,6 @@
 package terminal
 
 import org.scalajs.dom
-import org.scalajs.dom.raw.HTMLElement
 
 import scala.collection.mutable
 
