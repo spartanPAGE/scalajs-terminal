@@ -8,13 +8,14 @@ case class RenderTarget(id: String) {
 }
 
 object RenderTarget {
-  def create(parent: RenderTarget, tag: String, id: String, classes: String): RenderTarget = {
+  def create(parent: RenderTarget, tag: String, id: String = "", classes: String = "", innerHTML: String = ""): RenderTarget = {
     val target_element = dom.document.createElement(tag)
     target_element.id = id
     parent.element().appendChild(target_element)
 
     val target = target_element.asInstanceOf[HTMLElement]
     target.className = classes
+    target.innerHTML = innerHTML
     RenderTarget(id)
   }
 }
