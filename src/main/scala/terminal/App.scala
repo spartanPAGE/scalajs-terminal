@@ -6,7 +6,7 @@ import scala.scalajs.js.annotation.JSExport
 
 object App extends JSApp {
   implicit val root = RenderTarget(id = "scala-render-target")
-  implicit val terminalConfig = TerminalConfig(Terminal.createTarget(parent=root, tag="h1"), interval = 80)
+  implicit val terminalConfig = TerminalConfig(Terminal.createTarget(parent=root, tag="p"), interval = 80)
 
   val terminal = new Terminal()
 
