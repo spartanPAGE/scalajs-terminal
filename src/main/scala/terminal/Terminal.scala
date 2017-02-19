@@ -7,8 +7,6 @@ import scala.collection.mutable
 
 case class TerminalConfig(target: RenderTarget, interval: Double)
 
-
-
 object Terminal {
   val keystrokePath      = "assets/audios/keystroke.ogg"
   val keystrokeEnterPath = "assets/audios/keystroke-enter.ogg"
