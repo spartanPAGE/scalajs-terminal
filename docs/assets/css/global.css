@@ -14,12 +14,8 @@ body {
 }
 
 p {
-    margin-top:3em;
-    font-size:2em;
-}
-
-h1 {
-    font-size:5vw;
+    line-height: 2vw;
+    font-size: 2vw;
 }
 
 a {

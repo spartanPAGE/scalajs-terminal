@@ -1371,12 +1371,6 @@ $c_Lterminal_Terminal$.prototype.init___ = (function() {
   this.terminalRenderTargetId$1 = "terminal-render-target";
   return this
 });
-$c_Lterminal_Terminal$.prototype.createTarget__Lterminal_RenderTarget__T__Lterminal_RenderTarget = (function(parent, tag) {
-  var target = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().createElement(tag);
-  target.id = this.terminalRenderTargetId$1;
-  parent.element__Lorg_scalajs_dom_raw_HTMLElement().appendChild(target);
-  return new $c_Lterminal_RenderTarget().init___T(this.terminalRenderTargetId$1)
-});
 var $d_Lterminal_Terminal$ = new $TypeData().initClass({
   Lterminal_Terminal$: 0
 }, false, "terminal.Terminal$", {
@@ -1890,7 +1884,9 @@ $h_Lterminal_App$.prototype = $c_Lterminal_App$.prototype;
 $c_Lterminal_App$.prototype.init___ = (function() {
   $n_Lterminal_App$ = this;
   this.root$1 = new $c_Lterminal_RenderTarget().init___T("scala-render-target");
-  this.terminalConfig$1 = new $c_Lterminal_TerminalConfig().init___Lterminal_RenderTarget__D($m_Lterminal_Terminal$().createTarget__Lterminal_RenderTarget__T__Lterminal_RenderTarget(this.root$1, "h1"), 80.0);
+  var this$1 = $m_Lterminal_Terminal$();
+  var parent = this.root$1;
+  this.terminalConfig$1 = new $c_Lterminal_TerminalConfig().init___Lterminal_RenderTarget__D($m_Lterminal_RenderTarget$().create__Lterminal_RenderTarget__T__T__T__Lterminal_RenderTarget(parent, "p", this$1.terminalRenderTargetId$1, ""), 80.0);
   this.terminal$1 = new $c_Lterminal_Terminal().init___Lterminal_TerminalConfig(this.terminalConfig$1);
   return this
 });
@@ -2151,6 +2147,43 @@ var $d_sr_IntRef = new $TypeData().initClass({
   Ljava_io_Serializable: 1
 });
 $c_sr_IntRef.prototype.$classData = $d_sr_IntRef;
+/** @constructor */
+function $c_Lterminal_RenderTarget$() {
+  $c_O.call(this)
+}
+$c_Lterminal_RenderTarget$.prototype = new $h_O();
+$c_Lterminal_RenderTarget$.prototype.constructor = $c_Lterminal_RenderTarget$;
+/** @constructor */
+function $h_Lterminal_RenderTarget$() {
+  /*<skip>*/
+}
+$h_Lterminal_RenderTarget$.prototype = $c_Lterminal_RenderTarget$.prototype;
+$c_Lterminal_RenderTarget$.prototype.init___ = (function() {
+  return this
+});
+$c_Lterminal_RenderTarget$.prototype.create__Lterminal_RenderTarget__T__T__T__Lterminal_RenderTarget = (function(parent, tag, id, classes) {
+  var target_element = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().createElement(tag);
+  target_element.id = id;
+  parent.element__Lorg_scalajs_dom_raw_HTMLElement().appendChild(target_element);
+  target_element.className = classes;
+  return new $c_Lterminal_RenderTarget().init___T(id)
+});
+var $d_Lterminal_RenderTarget$ = new $TypeData().initClass({
+  Lterminal_RenderTarget$: 0
+}, false, "terminal.RenderTarget$", {
+  Lterminal_RenderTarget$: 1,
+  O: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lterminal_RenderTarget$.prototype.$classData = $d_Lterminal_RenderTarget$;
+var $n_Lterminal_RenderTarget$ = (void 0);
+function $m_Lterminal_RenderTarget$() {
+  if ((!$n_Lterminal_RenderTarget$)) {
+    $n_Lterminal_RenderTarget$ = new $c_Lterminal_RenderTarget$().init___()
+  };
+  return $n_Lterminal_RenderTarget$
+}
 var $d_jl_Boolean = new $TypeData().initClass({
   jl_Boolean: 0
 }, false, "java.lang.Boolean", {
