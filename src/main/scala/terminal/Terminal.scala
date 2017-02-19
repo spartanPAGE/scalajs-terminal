@@ -13,7 +13,7 @@ object Terminal {
   val terminalRenderTargetId = "terminal-render-target"
 
   def createTarget(parent: RenderTarget, tag: String): RenderTarget = {
-    RenderTarget.create(parent, tag, terminalRenderTargetId, "")
+    RenderTarget.create(parent, tag, terminalRenderTargetId)
   }
 }
 
