@@ -1,7 +1,11 @@
 package terminal
 
-case class NavbarConfig(target: RenderTarget, elements: Seq[String])
+import org.scalajs.dom
 
-case class Navbar(config: NavbarConfig) {
-  
+case class NavbarConfig(target: RenderTarget, elementTag: String, elementClasses: String, elements: Seq[String])
+
+class Navbar(implicit config: NavbarConfig) {
+  config.elements.foreach(element => {
+    RenderTarget.create(parent=config.target, tag=config.elementTag, classes=config.elementClasses, innerHTML = element)
+  })
 }
