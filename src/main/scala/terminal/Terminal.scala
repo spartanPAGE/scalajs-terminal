@@ -16,10 +16,7 @@ object Terminal {
   val terminalRenderTargetId = "terminal-render-target"
 
   def createTarget(parent: RenderTarget, tag: String): RenderTarget = {
-    val target = dom.document.createElement(tag)
-    target.id = terminalRenderTargetId
-    parent.element().appendChild(target)
-    RenderTarget(terminalRenderTargetId)
+    RenderTarget.create(parent, tag, terminalRenderTargetId, "")
   }
 }
 
